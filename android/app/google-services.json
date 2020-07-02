@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "662010825679",
+    "firebase_url": "https://heylol-task.firebaseio.com",
+    "project_id": "heylol-task",
+    "storage_bucket": "heylol-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662010825679:android:7cd40eb8c6cde42f9320ba",
+        "android_client_info": {
+          "package_name": "com.haroon.heylolTask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "662010825679-tjlutajtobnmlacd3kgtd3l7pjcfoisn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw23ZQOmOFI8N7pMzeT3T26gfGIqKR3Jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662010825679-tjlutajtobnmlacd3kgtd3l7pjcfoisn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "662010825679-t17k4q4cpiiuk67q1g7h7srfg3aj2sdi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.haroon.heylolTask"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
