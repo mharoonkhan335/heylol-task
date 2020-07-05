@@ -39,6 +39,28 @@ mixin _$AuthController on _AuthController, Store {
     });
   }
 
+  final _$userIDAtom = Atom(name: '_AuthController.userID');
+
+  @override
+  String get userID {
+    _$userIDAtom.reportRead();
+    return super.userID;
+  }
+
+  @override
+  set userID(String value) {
+    _$userIDAtom.reportWrite(value, super.userID, () {
+      super.userID = value;
+    });
+  }
+
+  final _$setUserIDAsyncAction = AsyncAction('_AuthController.setUserID');
+
+  @override
+  Future<dynamic> setUserID() {
+    return _$setUserIDAsyncAction.run(() => super.setUserID());
+  }
+
   final _$getCurrentUserAsyncAction =
       AsyncAction('_AuthController.getCurrentUser');
 
@@ -72,7 +94,8 @@ mixin _$AuthController on _AuthController, Store {
   String toString() {
     return '''
 user: ${user},
-isSet: ${isSet}
+isSet: ${isSet},
+userID: ${userID}
     ''';
   }
 }

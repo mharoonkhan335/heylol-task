@@ -32,7 +32,6 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Observer(
-
         //Main top level Screen that then navigates to every category and every video insid the category.
         builder: (_) => Stack(
           children: <Widget>[
@@ -50,7 +49,7 @@ class _HomeState extends State<Home> {
                         alignment: Alignment(0.0, -0.8),
                         child: Container(
                           height: 50,
-                          width: 100,
+                          width: 130,
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(boxShadow: [
                             BoxShadow(
@@ -78,21 +77,19 @@ class _HomeState extends State<Home> {
                 height: 40,
                 width: 80,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.red
-                ),
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.red),
                 child: GestureDetector(
                   onTap: () {
                     authController.logOut();
                   },
                   child: Center(
-                    child: Text("Log Out",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
+                      child: Text("Log Out",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ))),
                 ),
               ),
             ),

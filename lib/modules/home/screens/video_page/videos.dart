@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:heylolTask/modules/home/functions/home_repository.dart';
 import 'package:heylolTask/modules/home/screens/home_page/controller.dart';
 import 'package:video_player/video_player.dart';
+import 'controller.dart';
 
 class Videos extends StatefulWidget {
   final String videoURL;
@@ -13,6 +15,7 @@ class Videos extends StatefulWidget {
   final String category;
   final videoID;
   final userID;
+  // final dateAndLikes;
 
   Videos({
     this.videoURL,
@@ -22,6 +25,7 @@ class Videos extends StatefulWidget {
     this.category,
     this.videoID,
     this.userID,
+    // this.dateAndLikes
   });
 
   factory Videos.fromDocument(doc, userID) {
@@ -33,6 +37,7 @@ class Videos extends StatefulWidget {
       category: doc['category'],
       videoID: doc.documentID,
       userID: userID,
+      // dateAndLikes: dateAndLikes,
     );
   }
   @override
@@ -41,12 +46,17 @@ class Videos extends StatefulWidget {
 
 class _VideosState extends State<Videos> {
   VideoPlayerController _videoController;
+  VideoPageController controller = VideoPageController();
   int videoDuration;
   int watchedDuration;
   bool isWatched = false;
 
+  final mainVideosRef = Firestore.instance.collection('videos');
+
   @override
   void initState() {
+    // var videoDoc = mainVideoRef.document(widget.videoID);
+    controller.getLikes(widget.videoID);
     _videoController = VideoPlayerController.network(widget.videoURL)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
@@ -65,6 +75,7 @@ class _VideosState extends State<Videos> {
   }
 
   HomeRepository homeRepo = Modular.get<HomeRepository>();
+  VideoPageController videoPageController = Modular.get<VideoPageController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,21 +119,43 @@ class _VideosState extends State<Videos> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Icon(
-                        Icons.favorite,
-                        size: 25,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        widget.likes > 1000
-                            ? "${(widget.likes / 1000).toStringAsFixed(2)}k"
-                            : widget.likes.toString(),
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      Observer(
+                        builder: (_) => Column(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(
+                                Icons.favorite,
+                                size: 22,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                homeRepo.liked(widget.videoID);
+                              },
+                            ),
+                            Text(
+                              widget.likes > 1000
+                                  ? controller.likes.toString()
+                                  //  "${(controller.likes / 1000).toStringAsFixed(2)}k"
+                                  : widget.likes.toString(),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 17),
+                            ),
+                            Text(
+                              widget.timeAdded.toDate().toString(),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 17),
+                            ),
+                            // Container(
+                            //   width: MediaQuery.of(context).size.height,
+                            //   child: Text(videoPageController.prop.toString(),
+                            //       style: TextStyle(color: Colors.white)),
+                            // )
+                          ],
+                        ),
                       ),
                       ValueListenableBuilder(
                         valueListenable: _videoController,
                         builder: (context, VideoPlayerValue value, child) {
-                          //Do Something with the value.
                           if (value.position.inSeconds == watchedDuration) {
                             isWatched = true;
                             homeRepo.setIsWatched(
