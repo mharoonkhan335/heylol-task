@@ -100,7 +100,7 @@ exports.onWatched = functions.firestore
                 const unlockedCatLength = unlockedCat.length;
                 
                 //formula for setting the quota of number of videos watched against number of categories unlocked and it's total videos
-                if (count > (unlockedCatLength * 10) * (2 / 3)) {
+                if (count >= (unlockedCatLength * 10) * (2 / 3)) {
                     var unlock = interestCat.filter(cat => !unlockedCat.includes(cat));
                     userRef.update({
                         "unlockedCategory": FieldValue.arrayUnion(unlock[0])
