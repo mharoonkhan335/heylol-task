@@ -15,6 +15,7 @@ class Videos extends StatefulWidget {
   final String category;
   final videoID;
   final userID;
+  final sort;
   // final dateAndLikes;
 
   Videos({
@@ -25,10 +26,11 @@ class Videos extends StatefulWidget {
     this.category,
     this.videoID,
     this.userID,
+    this.sort,
     // this.dateAndLikes
   });
 
-  factory Videos.fromDocument(doc, userID) {
+  factory Videos.fromDocument(doc, userID, sort) {
     return Videos(
       videoURL: doc['videoURL'],
       thumbnailURL: doc['thumbnailURL'],
@@ -37,6 +39,7 @@ class Videos extends StatefulWidget {
       category: doc['category'],
       videoID: doc.documentID,
       userID: userID,
+      sort: sort,
       // dateAndLikes: dateAndLikes,
     );
   }

@@ -61,10 +61,10 @@ exports.onWatched = functions.firestore
         const videoID = context.params.videoID;
         const videosRef = admin.firestore().collection('videos');
         const unlockedVideosRef = admin.firestore().collection('users').doc(userID).collection('unlockedVideos');
-        const watchedVideosRef = admin.firestore().collection('users').doc(userID).collection('watchedVideos').doc(userID);
+        // const watchedVideosRef = admin.firestore().collection('users').doc(userID).collection('watchedVideos').doc(userID);
 
         var count;
-        watchedVideosRef.get()
+        userRef.get()
             .then((doc) => {
                 if (doc.exists) {
                     //If the document exists, then add the value to the firebase.
@@ -72,19 +72,19 @@ exports.onWatched = functions.firestore
                     count = docData['watchedCount'];
                     count = count + 1;
 
-                    watchedVideosRef.update({
+                    userRef.update({
                         "watchedCount": count
                     });
                 }
 
-                else {
-                    /* other wise if document doesn't exist, then it means user is watching his first video
-                        thus creating a document for user */
-                    console.log('Document Added');
-                    watchedVideosRef.set({
-                        "watchedCount": 1
-                    });
-                }
+                // else {
+                //     /* other wise if document doesn't exist, then it means user is watching his first video
+                //         thus creating a document for user */
+                //     console.log('Document Added');
+                //     watchedVideosRef.set({
+                //         "watchedCount": 1
+                //     });
+                // }
                 return null;
             }).catch(error => {
                 console.log(error);

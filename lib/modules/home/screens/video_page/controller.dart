@@ -20,11 +20,11 @@ abstract class _VideoPageController with Store {
     var videoDoc = await mainVideosRef.document(videoID).get();
     likes = videoDoc['likes'];
 
-    return likes;
+    // return likes;
   }
 
   @action
-  Future<void> getUnlockedVideos(userRef, userID, category) async {
+  Future getUnlockedVideos(userRef, userID, category) async {
     var allVideosRef = Firestore.instance.collection('videos');
     List<Videos> videos = [];
 
@@ -33,27 +33,33 @@ abstract class _VideoPageController with Store {
         .collection('unlockedVideos')
         .where("category", isEqualTo: category)
         .where('isWatched', isEqualTo: false)
-        .getDocuments()
-        .then((query) {
-      query.documents.forEach((unlockDoc) async {
+        .getDocuments();
+
+      querySnapshot.documents.forEach((unlockDoc) async {
         var videoid = unlockDoc.documentID;
-        await allVideosRef.document(videoid).get().then((mainVideoDoc) {
+        var mainVideoDoc = await allVideosRef.document(videoid).get();
+          print("EXECUTING FOREACH");
           Map<String, dynamic> dateAndLikes = {
             "likes": mainVideoDoc['likes'],
-            "timeAdded": (mainVideoDoc['timeAdded'].toString())
+            "timeAdded": mainVideoDoc['timeAdded'].toString()
           };
-          
+          List<Map<String, dynamic>> properties = [];
           prop.add(dateAndLikes);
+
+          // print("PROP FIRST ==> $properties");
           prop.sort((m2, m1) {
             var r = m1["likes"].compareTo(m2["likes"]);
             if (r != 0) return r;
             return m1["timeAdded"].compareTo(m2["timeAdded"]);
           });
+          // prop = properties;
+          // print(prop);
           //  print(likesAndDate);
           //  videos.add(Videos.fromDocument(unlockDoc, userID, dateAndLikes));
-        });
+
       });
-    });
+    print("EXECUTED FOR EACH");
+    return prop;
 
     // print("EXECUTING BELOW");
     // likesAndDate = prop;

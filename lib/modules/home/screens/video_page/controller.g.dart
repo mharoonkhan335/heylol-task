@@ -50,7 +50,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
       AsyncAction('_VideoPageController.getUnlockedVideos');
 
   @override
-  Future<void> getUnlockedVideos(
+  Future<dynamic> getUnlockedVideos(
       dynamic userRef, dynamic userID, dynamic category) {
     return _$getUnlockedVideosAsyncAction
         .run(() => super.getUnlockedVideos(userRef, userID, category));

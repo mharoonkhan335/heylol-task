@@ -8,6 +8,7 @@ import 'modules/home/module.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // FirebaseAuth.instance.signOut();
   runApp(ModularApp(module: MyApp()));
 }
 

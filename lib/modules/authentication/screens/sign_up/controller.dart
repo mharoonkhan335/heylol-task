@@ -30,6 +30,7 @@ abstract class _SignUpController with Store {
         "interestCategory": [],
         "unlockedCategory": [],
         "joined": DateTime.now(),
+        "watchedCount": 0
       };
       final user = await repo.signUpUser(userRegistry, password);
       auth.setUser(user);
