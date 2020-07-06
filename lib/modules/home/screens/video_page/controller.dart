@@ -16,7 +16,7 @@ abstract class _VideoPageController with Store {
   int likes = 0;
 
   @action
-  Future<int> getLikes(videoID) async {
+  Future<void> getLikes(videoID) async {
     var videoDoc = await mainVideosRef.document(videoID).get();
     likes = videoDoc['likes'];
 
@@ -35,34 +35,22 @@ abstract class _VideoPageController with Store {
         .where('isWatched', isEqualTo: false)
         .getDocuments();
 
-      querySnapshot.documents.forEach((unlockDoc) async {
-        var videoid = unlockDoc.documentID;
-        var mainVideoDoc = await allVideosRef.document(videoid).get();
-          print("EXECUTING FOREACH");
-          Map<String, dynamic> dateAndLikes = {
-            "likes": mainVideoDoc['likes'],
-            "timeAdded": mainVideoDoc['timeAdded'].toString()
-          };
-          List<Map<String, dynamic>> properties = [];
-          prop.add(dateAndLikes);
-
-          // print("PROP FIRST ==> $properties");
-          prop.sort((m2, m1) {
-            var r = m1["likes"].compareTo(m2["likes"]);
-            if (r != 0) return r;
-            return m1["timeAdded"].compareTo(m2["timeAdded"]);
-          });
-          // prop = properties;
-          // print(prop);
-          //  print(likesAndDate);
-          //  videos.add(Videos.fromDocument(unlockDoc, userID, dateAndLikes));
-
-      });
-    print("EXECUTED FOR EACH");
-    return prop;
-
-    // print("EXECUTING BELOW");
-    // likesAndDate = prop;
-    // print('LIKES AND DATE ==> $likesAndDate');
+    //Getting the Like count from the specific video a user is on it...
+    for (var unlockDoc in querySnapshot.documents) {
+      var videoid = unlockDoc.documentID;
+      var mainVideoDoc = await allVideosRef.document(videoid).get();
+      Map<String, dynamic> dateAndLikes = {
+        "likes": mainVideoDoc['likes'],
+        "timeAdded": mainVideoDoc['timeAdded'].toString()
+      };
+      videos.add(Videos.fromDocument(unlockDoc, userID, dateAndLikes));
+    }
+    //Sorts videos on the basis of likes then date
+      videos.sort((video2, video1) {
+        var r = video1.sort["likes"].compareTo(video2.sort["likes"]);
+        if (r != 0) return r;
+        return video1.sort["timeAdded"].compareTo(video2.sort["timeAdded"]);
+      });    
+    return videos;
   }
 }

@@ -7,7 +7,6 @@ import 'screens/home_page/controller.dart';
 
 class HomeModule extends ChildModule {
   @override
-  // TODO: implement binds
   List<Bind> get binds => [
         Bind((i) => HomeRepository()),
         Bind((i) => HomeController()),
@@ -15,7 +14,6 @@ class HomeModule extends ChildModule {
       ];
 
   @override
-  // TODO: implement routers
   List<Router> get routers => [
         Router(Modular.initialRoute, child: (_, args) => Home()),
       ];

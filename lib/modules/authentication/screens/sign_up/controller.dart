@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:heylolTask/modules/authentication/logic/repository.dart';
-import 'package:heylolTask/modules/authentication/module.dart';
 import 'package:heylolTask/modules/authentication/screens/auth/controller.dart';
 import 'package:mobx/mobx.dart';
 part 'controller.g.dart';

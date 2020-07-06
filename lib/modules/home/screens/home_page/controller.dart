@@ -1,4 +1,3 @@
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:heylolTask/modules/home/functions/home_repository.dart';
 part 'controller.g.dart';

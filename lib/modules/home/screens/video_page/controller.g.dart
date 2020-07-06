@@ -42,7 +42,7 @@ mixin _$VideoPageController on _VideoPageController, Store {
   final _$getLikesAsyncAction = AsyncAction('_VideoPageController.getLikes');
 
   @override
-  Future<int> getLikes(dynamic videoID) {
+  Future<void> getLikes(dynamic videoID) {
     return _$getLikesAsyncAction.run(() => super.getLikes(videoID));
   }
 

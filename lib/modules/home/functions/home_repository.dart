@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:heylolTask/modules/authentication/logic/repository.dart';
 import 'package:heylolTask/modules/home/screens/video_page/controller.dart';
+
 class HomeRepository {
   AuthenticationRepository authRepo = Modular.get<AuthenticationRepository>();
-  VideoPageController videoPageController = VideoPageController();
+  VideoPageController videoPageController = Modular.get<VideoPageController>();
   Future getUnlockedCategories() async {
     //returns a list of the unlocked categories of a user
     final currentUser = await authRepo.getCurrentUser();
@@ -25,14 +26,27 @@ class HomeRepository {
         .updateData({"isWatched": isWatched});
   }
 
-  liked(videoID) async {
+  liked(String videoID, String userID, VideoPageController controller) async {
+
+    //Liking a video and incrementing the like count on the database.
+    
     final videoRef = Firestore.instance.collection('videos').document(videoID);
     try {
       final videoDoc = await videoRef.get();
-      int videoLikes = videoDoc['likes'];
-      videoLikes++;
-      await videoRef.setData({"likes": videoLikes});
-      videoPageController.likes = videoPageController.likes +1;
+      final likedBy = videoDoc['likedBy'];
+      print(likedBy);
+      if (!likedBy.contains(userID)) {
+        int videoLikes = videoDoc['likes'];
+        videoLikes++;
+        
+        await videoRef.updateData({
+          "likes": videoLikes,
+          "likedBy": FieldValue.arrayUnion([userID])
+        });
+        controller.likes++;
+      } else {
+        print("ALREADY LIKED");
+      }
     } catch (e) {
       print("Error Liking Video: $e");
     }

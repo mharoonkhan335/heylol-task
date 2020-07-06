@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:heylolTask/modules/home/functions/home_repository.dart';
-import 'package:heylolTask/modules/home/screens/home_page/controller.dart';
 import 'package:video_player/video_player.dart';
 import 'controller.dart';
 
@@ -122,39 +121,37 @@ class _VideosState extends State<Videos> {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      Observer(
-                        builder: (_) => Column(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.favorite,
-                                size: 22,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                homeRepo.liked(widget.videoID);
-                              },
+                      Column(
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(
+                              Icons.favorite,
+                              size: 22,
+                              color: Colors.white,
                             ),
-                            Text(
-                              widget.likes > 1000
+                            onPressed: () {
+                              homeRepo.liked(widget.videoID, widget.userID, controller);
+                            },
+                          ),
+                          Observer(
+                            builder: (_) => Text(
+                              controller.likes > 1000
                                   ? controller.likes.toString()
                                   //  "${(controller.likes / 1000).toStringAsFixed(2)}k"
-                                  : widget.likes.toString(),
+                                  : controller.likes.toString(),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 17),
                             ),
-                            Text(
-                              widget.timeAdded.toDate().toString(),
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 17),
-                            ),
-                            // Container(
-                            //   width: MediaQuery.of(context).size.height,
-                            //   child: Text(videoPageController.prop.toString(),
-                            //       style: TextStyle(color: Colors.white)),
-                            // )
-                          ],
-                        ),
+                          ),
+                          Text(
+                            widget.timeAdded.toDate().toString(),
+                            style: TextStyle(color: Colors.white, fontSize: 17),
+                          ),
+                          Text(
+                            widget.videoID,
+                            style: TextStyle(color: Colors.white, fontSize: 17),
+                          ),
+                        ],
                       ),
                       ValueListenableBuilder(
                         valueListenable: _videoController,

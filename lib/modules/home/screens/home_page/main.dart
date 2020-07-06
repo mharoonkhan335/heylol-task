@@ -1,10 +1,7 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:heylolTask/modules/authentication/logic/repository.dart';
 import 'package:heylolTask/modules/authentication/screens/auth/controller.dart';
-import 'package:heylolTask/modules/home/functions/home_repository.dart';
 import 'package:heylolTask/modules/home/data/videos_model.dart';
 import 'package:heylolTask/modules/home/screens/video_page/main.dart';
 

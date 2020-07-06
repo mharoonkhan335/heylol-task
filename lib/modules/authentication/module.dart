@@ -9,14 +9,12 @@ import 'screens/set_interests/main.dart';
 
 class AuthenticationModule extends ChildModule {
   @override
-  // TODO: implement binds
   List<Bind> get binds => [
         Bind((i) => AuthenticationRepository()),
         Bind((i) => AuthController()),
       ];
 
   @override
-  // TODO: implement routers
   List<Router> get routers => [
         Router(Modular.initialRoute, child: (_, args) => AuthScreen()),
         Router(SIGNIN, child: (_, args) => SignIn()),

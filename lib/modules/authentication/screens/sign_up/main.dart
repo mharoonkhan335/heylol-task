@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:heylolTask/modules/authentication/module.dart';
 import 'package:heylolTask/modules/authentication/screens/sign_up/controller.dart';
 
 class SignUp extends StatelessWidget {
-  SignUpController controller = SignUpController();
+  final SignUpController controller = SignUpController();
 
   @override
   Widget build(BuildContext context) {
@@ -183,9 +182,6 @@ class _SetInterestVideosState extends State<SetInterestVideos> {
                     },
                     validator: (value) {
                       var array = value.split(",");
-                      var firstInterest = array[0];
-                      var secondInterest = array[1];
-
                       if (!value.contains(',')) {
                         return "Please enter only two points of interests separated by a single ','";
                       } else if (array.length > 2) {
