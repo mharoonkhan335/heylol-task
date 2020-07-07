@@ -36,6 +36,7 @@ class HomeRepository {
       final likedBy = videoDoc['likedBy'];
       print(likedBy);
       if (!likedBy.contains(userID)) {
+        controller.likes++;
         int videoLikes = videoDoc['likes'];
         videoLikes++;
         
@@ -43,7 +44,6 @@ class HomeRepository {
           "likes": videoLikes,
           "likedBy": FieldValue.arrayUnion([userID])
         });
-        controller.likes++;
       } else {
         print("ALREADY LIKED");
       }
